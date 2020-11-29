@@ -14,15 +14,8 @@ import java.util.Objects;
 public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
     private static final int DEFAULT_INITIAL_CAPACITY = 10;
     private int size;
-    /*
-    Warning:
-    You may not rename this field or change its type.
-    We will be inspecting it in our secret tests.
-     */
     SimpleEntry<K, V>[] entries;
-
-    // You may add extra fields or helper methods though!
-
+    
     public ArrayMap() {
         this(DEFAULT_INITIAL_CAPACITY);
     }
@@ -42,16 +35,6 @@ public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
      */
     @SuppressWarnings("unchecked")
     private SimpleEntry<K, V>[] createArrayOfEntries(int arraySize) {
-        /*
-        It turns out that creating arrays of generic objects in Java is complicated due to something
-        known as "type erasure."
-
-        We've given you this helper method to help simplify this part of your assignment. Use this
-        helper method as appropriate when implementing the rest of this class.
-
-        You are not required to understand how this method works, what type erasure is, or how
-        arrays and generics interact.
-        */
         return (SimpleEntry<K, V>[]) (new SimpleEntry[arraySize]);
     }
 
@@ -129,18 +112,13 @@ public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
         return newArrayMap;
     }
 
-    // You may NOT create any new temporary data structures inside of your iterators.
-    // We want our iterators to be efficient, and having to copy the contents of our
-    // map to some other data structure at any point is suboptimal.
     @Override
     public Iterator<Map.Entry<K, V>> iterator() {
-        // Note: you won't need to change this method (unless you add more constructor parameters)
         return new ArrayMapIterator<>(this.entries);
     }
 
     private static class ArrayMapIterator<K, V> implements Iterator<Map.Entry<K, V>> {
         private final SimpleEntry<K, V>[] entries;
-        // You may add more fields and constructor parameters
         private int currIndex;
 
         public ArrayMapIterator(SimpleEntry<K, V>[] entries) {
