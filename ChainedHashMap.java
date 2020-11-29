@@ -17,23 +17,14 @@ public class ChainedHashMap<K, V> extends AbstractIterableMap<K, V> {
     private static final int DEFAULT_INITIAL_CHAIN_COUNT = 10;
     private static final int DEFAULT_INITIAL_CHAIN_CAPACITY = 10;
     private static final double DEFAULT_RESIZING_LOAD_FACTOR_THRESHOLD = 1.0;
-
-
-    /*
-    Warning:
-    You may not rename this field or change its type.
-    We will be inspecting it in our secret tests.
-     */
     AbstractIterableMap<K, V>[] chains;
-
-    // You're encouraged to add extra fields (and helper methods) though!
 
     public ChainedHashMap() {
         this(DEFAULT_RESIZING_LOAD_FACTOR_THRESHOLD, DEFAULT_INITIAL_CHAIN_COUNT, DEFAULT_INITIAL_CHAIN_CAPACITY);
     }
 
     public ChainedHashMap(double resizingLoadFactorThreshold, int initialChainCount, int chainInitialCapacity) {
-        size = 0; // is this size of chains horizontal? Or size of LL vert.
+        size = 0;
         this.userInitialChainCount = initialChainCount;
         this.chains = createArrayOfChains(initialChainCount);
         this.userInitialChainCap = chainInitialCapacity;
@@ -57,14 +48,6 @@ public class ChainedHashMap<K, V> extends AbstractIterableMap<K, V> {
         return (AbstractIterableMap<K, V>[]) new AbstractIterableMap[arraySize];
     }
 
-    /**
-     * Returns a new chain.
-     *
-     * This method will be overridden by the grader so that your ChainedHashMap implementation
-     * is graded using our solution ArrayMaps.
-     *
-     * Note: You do not need to modify this method.
-     */
     protected AbstractIterableMap<K, V> createChain(int initialSize) {
         return new ArrayMap<>(initialSize);
     }
@@ -155,18 +138,13 @@ public class ChainedHashMap<K, V> extends AbstractIterableMap<K, V> {
 
     @Override
     public Iterator<Map.Entry<K, V>> iterator() {
-        // Note: you won't need to change this method (unless you add more constructor parameters)
         return new ChainedHashMapIterator<>(this.chains);
     }
-
-    /*
-    See the assignment webpage for tips and restrictions on implementing this iterator.
-     */
+    
     private static class ChainedHashMapIterator<K, V> implements Iterator<Map.Entry<K, V>> {
         private AbstractIterableMap<K, V>[] chains;
         private int currIndex;
         private Iterator<Map.Entry<K, V>> arrayMapIterator;
-        // You may add more fields and constructor parameters
 
         public ChainedHashMapIterator(AbstractIterableMap<K, V>[] chains) {
             this.chains = chains;
